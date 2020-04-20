@@ -17,14 +17,4 @@ public abstract class PersonaService<T, ID> implements IService<T> {
 		.orElseThrow(() -> new RuntimeException("No existe usuario con ID " + id));
     }
 
-    public T buscarPorEmail(String email) throws Throwable {
-	return (T) personaRepository.findByEmail(email)
-		.orElseThrow(() -> new RuntimeException("No existe usuario con EMAIL " + email));
-    }
-
-    public T buscarPorApellidoNombre(String apellido, String nombre) throws Throwable {
-	return (T) personaRepository.findByApellidoAndNombre(apellido, nombre)
-		.orElseThrow(() -> new RuntimeException("No existe usuario " + apellido + ", " + nombre));
-    }
-
 }

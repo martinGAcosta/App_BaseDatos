@@ -16,13 +16,19 @@ public class Item implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private BigDecimal cantidad = BigDecimal.ONE;
-    private BigDecimal precioUnitario = BigDecimal.ZERO;
     @OneToOne
     private Producto producto;
+    private BigDecimal precioUnitario = BigDecimal.ZERO;
+    private BigDecimal cantidad = BigDecimal.ONE;
 
     public Item() {
 	// TODO Auto-generated constructor stub
+    }
+
+    public Item(Producto producto, BigDecimal precioUnitario, BigDecimal cantidad) {
+	this.producto = producto;
+	this.precioUnitario = precioUnitario;
+	this.cantidad = cantidad;
     }
 
     public BigDecimal getCantidad() {

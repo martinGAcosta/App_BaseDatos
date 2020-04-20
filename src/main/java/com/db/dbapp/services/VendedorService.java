@@ -18,9 +18,14 @@ public class VendedorService extends PersonaService<Vendedor, Long> {
 	this.vendedorRepository = vendedorRepository;
     }
 
-    public Vendedor obtenerPorCodigo(String cod) throws Throwable {
-	return vendedorRepository.findByCodigo(cod)
-		.orElseThrow(() -> new RuntimeException("No existe el vendedor con COD " + cod));
+    @Override
+    public Vendedor obtenerPorId(Long id) throws Throwable {
+	Object o = super.obtenerPorId(id);
+	try {
+	    return (Vendedor) o;
+	} catch (ClassCastException e) {
+	    throw new RuntimeException("El id " + id + " no corresponde a un vendedor valido");
+	}
     }
 
     @Override
@@ -37,6 +42,7 @@ public class VendedorService extends PersonaService<Vendedor, Long> {
     @Override
     public void eliminar(Long id) {
 	Vendedor vendedor;
+	// String tipo = "VENDEDOR";
 	try {
 	    vendedor = this.obtenerPorId(id);
 	} catch (Throwable e) {

@@ -18,14 +18,6 @@ public class AdminService extends PersonaService<Admin, Long> {
 	this.adminRepository = adminRepository;
     }
 
-    public Admin crearAdministrador(Admin admin) {
-	return adminRepository.save(admin);
-    }
-
-    public void actualizarAdministrador(Admin admin) {
-	adminRepository.save(admin);
-    }
-
     @Override
     public Admin crear(Admin entity) {
 	return adminRepository.save(entity);
@@ -51,6 +43,16 @@ public class AdminService extends PersonaService<Admin, Long> {
     @Override
     public List<Admin> listar() {
 	return (List<Admin>) adminRepository.findAll();
+    }
+
+    @Override
+    public Admin obtenerPorId(Long id) throws Throwable {
+	Object o = super.obtenerPorId(id);
+	try {
+	    return (Admin) o;
+	} catch (ClassCastException e) {
+	    throw new RuntimeException("El id " + id + " no corresponde a un admin valido");
+	}
     }
 
 }

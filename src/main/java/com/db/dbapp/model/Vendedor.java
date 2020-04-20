@@ -23,6 +23,9 @@ public class Vendedor extends Persona {
     @OneToMany(fetch = FetchType.EAGER)
     private Set<Cliente> clientes = new HashSet<Cliente>();
 
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<Carro> ventas = new HashSet<>();
+
     public Vendedor() {
 	// TODO Auto-generated constructor stub
     }
@@ -67,4 +70,20 @@ public class Vendedor extends Persona {
 	clientes.remove(cli);
 
     }
+
+    public Set<Carro> getVentas() {
+	return ventas;
+    }
+
+    public void setVentas(Set<Carro> ventas) {
+	this.ventas = ventas;
+    }
+
+    public BigDecimal getMontoCompradoPeriodo(Date desde, Date hasta) {
+	if (ventas == null || ventas.isEmpty())
+	    return BigDecimal.ZERO;
+	return ventas.stream().filter(c -> desde.after(c.getFecha()) && hasta.before(c.getFecha()))
+		.map(c -> c.getMonto()).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
 }

@@ -2,36 +2,26 @@ package com.db.dbapp.services;
 
 import java.util.List;
 
-import javax.validation.ConstraintViolationException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.db.dbapp.model.Cliente;
+import com.db.dbapp.repositories.CarroRepository;
 import com.db.dbapp.repositories.ClienteRepository;
-import com.db.dbapp.repositories.CompraRepository;
 
 @Service
 public class ClienteService extends PersonaService<Cliente, Long> {
 
     ClienteRepository clienteRepository;
-    CompraRepository compraRepository;
+    CarroRepository carroRepository;
 
     @Autowired
-    public ClienteService(ClienteRepository clienteRepository, CompraRepository compraRepository) {
+    public ClienteService(ClienteRepository clienteRepository, CarroRepository carroRepository) {
 	this.clienteRepository = clienteRepository;
-	this.compraRepository = compraRepository;
+	this.carroRepository = carroRepository;
     }
 
-    public Cliente nuevo(Cliente cliente) {
-	try {
-	    return clienteRepository.save(cliente);
-
-	} catch (ConstraintViolationException e) {
-	    throw new RuntimeException("No puede crearse el cliente por una violacion a una restriccion");
-	}
-    }
-
+    @Override
     public void actualizar(Cliente cliente) {
 	clienteRepository.save(cliente);
     }
@@ -58,4 +48,13 @@ public class ClienteService extends PersonaService<Cliente, Long> {
 	return (Cliente) clienteRepository.save(entity);
     }
 
+    @Override
+    public Cliente obtenerPorId(Long id) throws Throwable {
+	Object o = super.obtenerPorId(id);
+	try {
+	    return (Cliente) o;
+	} catch (ClassCastException e) {
+	    throw new RuntimeException("El id " + id + " no corresponde a un cliente valido");
+	}
+    }
 }

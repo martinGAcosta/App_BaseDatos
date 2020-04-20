@@ -7,7 +7,7 @@ public class ClienteDto extends PersonaDto {
 
     private Long dni = null;
     private VendedorDto vendedor = null;
-    private Set<CompraDto> compras = new HashSet<>();
+    private Set<CarroDto> compras = new HashSet<>();
 
     public Long getDni() {
 	return dni;
@@ -25,11 +25,11 @@ public class ClienteDto extends PersonaDto {
 	this.vendedor = vendedor;
     }
 
-    public Set<CompraDto> getCompras() {
+    public Set<CarroDto> getCompras() {
 	return compras;
     }
 
-    public void setCompras(Set<CompraDto> compras) {
+    public void setCompras(Set<CarroDto> compras) {
 	this.compras = compras;
     }
 

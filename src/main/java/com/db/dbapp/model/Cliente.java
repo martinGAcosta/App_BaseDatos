@@ -24,7 +24,7 @@ public class Cliente extends Persona {
     private Vendedor vendedor;
     @OneToMany
     @JoinTable(name = "Cliente_Compras")
-    private Set<Compra> compras = new HashSet<>();
+    private Set<Carro> carros = new HashSet<>();
 
     public Cliente() {
 	// TODO Auto-generated constructor stub
@@ -47,18 +47,18 @@ public class Cliente extends Persona {
     }
 
     public BigDecimal getMontoCompradoPeriodo(Date desde, Date hasta) {
-	if (compras == null || compras.isEmpty())
+	if (carros == null || carros.isEmpty())
 	    return BigDecimal.ZERO;
-	return compras.stream().filter(c -> desde.after(c.getFecha()) && hasta.before(c.getFecha()))
+	return carros.stream().filter(c -> desde.after(c.getFecha()) && hasta.before(c.getFecha()))
 		.map(c -> c.getMonto()).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    public Set<Compra> getCompras() {
-	return compras;
+    public Set<Carro> getCompras() {
+	return carros;
     }
 
-    public void setCompras(Set<Compra> compras) {
-	this.compras = compras;
+    public void setCompras(Set<Carro> carros) {
+	this.carros = carros;
     }
 
 }

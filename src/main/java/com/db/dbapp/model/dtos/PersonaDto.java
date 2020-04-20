@@ -1,11 +1,23 @@
 package com.db.dbapp.model.dtos;
 
-public abstract class PersonaDto {
+public class PersonaDto {
     private Long id = null;
+    private String nombre = "";
+    private String apellido = "";
     private String telefono = "";
     private String email = "";
-    private String apellido = "";
-    private String nombre = "";
+
+    public PersonaDto() {
+	// TODO Auto-generated constructor stub
+    }
+
+    public PersonaDto(Long id, String nombre, String apellido, String telefono, String email) {
+	this.id = id;
+	this.nombre = nombre;
+	this.apellido = apellido;
+	this.telefono = telefono;
+	this.email = email;
+    }
 
     public Long getId() {
 	return id;

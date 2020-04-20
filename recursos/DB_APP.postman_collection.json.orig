@@ -1,0 +1,530 @@
+{
+	"info": {
+		"_postman_id": "4e55449a-463b-4f71-9a4c-2ea133d09d00",
+		"name": "DB_APP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "administracion-clientes",
+			"item": [
+				{
+					"name": "admin-clientes-crear",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"apellido\":\"Garcia\",\n\t\"nombre\":\"Martin\",\n\t\"email\":\"bd@misitio.com\",\n\t\"dni\":1323363322\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/administracion/clientes/crear",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"administracion",
+								"clientes",
+								"crear"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "admin-clientes-actualizar",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\":\"1\",\n\t\"apellido\":\"Gonzalez\",\n\t\"nombre\":\"Sebastian\",\n\t\"email\":\"sebagon@misitio.com\",\n\t\"dni\":132513536\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/administracion/clientes/actualizar/12",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"administracion",
+								"clientes",
+								"actualizar",
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "admin-clientes-borrar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:8080/administracion/clientes/borrar/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"administracion",
+								"clientes",
+								"borrar",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "admin-clientes-listar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/administracion/clientes/listar",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"administracion",
+								"clientes",
+								"listar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "admin-clientes-reasignar-vendedor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/administracion/clientes/reasignar/1/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"administracion",
+								"clientes",
+								"reasignar",
+								"1",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "administracion-vendedores",
+			"item": [
+				{
+					"name": "admin-vendedores-crear",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"apellido\":\"Fernandez\",\n\t\"nombre\":\"Pablo\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/administracion/vendedores/crear",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"administracion",
+								"vendedores",
+								"crear"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "admin-vendedores-actualizar",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\":\"1\",\n\t\"apellido\":\"Gonzalez\",\n\t\"nombre\":\"Sebastian\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/administracion/vendedores/actualizar/12",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"administracion",
+								"vendedores",
+								"actualizar",
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "admin-vendedores-agregar-cliente",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\":\"1\",\n\t\"apellido\":\"Gonzalez\",\n\t\"nombre\":\"Sebastian\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/administracion/vendedores/2/agregar/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"administracion",
+								"vendedores",
+								"2",
+								"agregar",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "admin-vendedores-borrar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:8080/administracion/vendedores/borrar/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"administracion",
+								"vendedores",
+								"borrar",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "admin-vendedores-listar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/administracion/vendedores/listar",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"administracion",
+								"vendedores",
+								"listar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "admin-vendedores-listar-clientes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/administracion/vendedores/2/clientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"administracion",
+								"vendedores",
+								"2",
+								"clientes"
+							]
+						},
+						"description": "Lista los clientes de un vendedor"
+					},
+					"response": []
+				},
+				{
+					"name": "admin-vendedores-transf-cli",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/administracion/vendedores/transferir/1/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"administracion",
+								"vendedores",
+								"transferir",
+								"1",
+								"2"
+							]
+						},
+						"description": "Transfiere los clientes de un vendedor a otro "
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "compras-cliente",
+			"item": [
+				{
+					"name": "cliente-crear-compra",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/compras/cliente/2/nuevaCompra",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"compras",
+								"cliente",
+								"2",
+								"nuevaCompra"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "compras-cliente-obtener-compra",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/compras/cliente//1/nuevaCompra",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"compras",
+								"cliente",
+								"",
+								"1",
+								"nuevaCompra"
+							]
+						}
+					},
+					"response": []
+<<<<<<< HEAD
+=======
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "administracion-productos",
+			"item": [
+				{
+					"name": "productos-nuevo-producto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"codigo\":\"ABCE-1\",\n\t\"descripcion\":\"Taza de Plastico\",\n\t\"precioUnitario\":\"5.00\",\n\t\"stock\":\"60\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/administracion/productos/crear",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"administracion",
+								"productos",
+								"crear"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "productos-actualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\":2,\n\t\"codigo\":\"ABCE-1\",\n\t\"descripcion\":\"Taza de Plastico\",\n\t\"precioUnitario\":\"3.00\",\n\t\"stock\":\"160\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/administracion/productos/actualizar/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"administracion",
+								"productos",
+								"actualizar",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "productos-listar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/administracion/productos/listar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"administracion",
+								"productos",
+								"listar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "producos-borrar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/administracion/productos/borrar/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"administracion",
+								"productos",
+								"borrar",
+								"1"
+							]
+						}
+					},
+					"response": []
+>>>>>>> refs/remotes/origin/develop
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
