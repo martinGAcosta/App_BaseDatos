@@ -4,13 +4,17 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.db.dbapp.mappers.ItemMapper;
 import com.db.dbapp.model.Carro;
 import com.db.dbapp.model.CarroStatus;
 import com.db.dbapp.model.Item;
 import com.db.dbapp.model.Producto;
+import com.db.dbapp.model.dtos.ItemDto;
 import com.db.dbapp.repositories.CarroRepository;
 import com.db.dbapp.repositories.ItemRepository;
 
@@ -62,15 +66,23 @@ public class CarroService implements IService<Carro> {
     }
 
     @Transactional
-    public void agregarItem(Long id, Item item) {
-	Carro carro = this.obtenerPorId(id);
-	Producto producto = item.getProducto();
-	producto.setStock(producto.getStock().subtract(item.getCantidad()));
-	productoService.actualizar(producto);
-	item = itemRepository.save(item);
-	carro.addItem(item);
-	this.actualizar(carro);
-    }
+    public void agregarItem(Long id, ItemDto itemDto) throws Throwable {
+    	Item item = null;
+		    	Producto producto = productoService.obtenerPorId(itemDto.getIdProducto());
+			    if (producto.getStock().compareTo(itemDto.getCantidad()) < 0)
+				throw new RuntimeException("La cantidad solicitada excede la disponibilidad del producto (queda "
+					+ producto.getStock() + ")");
+			    item = new Item(producto, producto.getPrecioUnitario(), itemDto.getCantidad());
+				Carro carro = obtenerPorId(id);
+				    if (CarroStatus.ACTIVO.equals(carro.getStatus())) {
+				    	producto = item.getProducto();
+				    	producto.setStock(producto.getStock().subtract(item.getCantidad()));
+				    	productoService.actualizar(producto);
+				    	item = itemRepository.save(item);
+				    	carro.addItem(item);
+				    	this.actualizar(carro);}
+		}
+
 
     @Transactional
     public void cancelar(Long id) {

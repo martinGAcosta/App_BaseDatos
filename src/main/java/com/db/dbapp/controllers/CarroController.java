@@ -39,33 +39,17 @@ public abstract class CarroController {
 	Item item = null;
 	Producto producto = null;
 	try {
-	    producto = productoService.obtenerPorId(itemDto.getIdProducto());
-	    if (producto.getStock().compareTo(itemDto.getCantidad()) < 0)
-		throw new RuntimeException("La cantidad solicitada excede la disponibilidad del producto (queda "
-			+ producto.getStock() + ")");
-	    item = new Item(producto, producto.getPrecioUnitario(), itemDto.getCantidad());
-
-	} catch (Exception e) {
-	    e.printStackTrace();
-	    return new ResponseEntity(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-	} catch (Throwable e) {
-	    e.printStackTrace();
-	    return new ResponseEntity(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-	}
-
-	try {
-		 Carro carro = carroService.obtenerPorId(id);
-		    if (CarroStatus.ACTIVO.equals(carro.getStatus())) {
-		 		carroService.agregarItem(id, item);
-	    itemDto = ItemMapper.toItemDto(new ItemDto(), item);
-	    return new ResponseEntity<ItemDto>(itemDto, HttpStatus.OK);
-		    }
-		    else
-			    return new ResponseEntity("El item no puede agregarse porque el carro ya no esta activo", HttpStatus.BAD_REQUEST);
-	} catch (Throwable e) {
-	    e.printStackTrace();
-	    return new ResponseEntity(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-	}
+		carroService.agregarItem(id, itemDto);
+	    return new ResponseEntity("El item se agregó correctamente", HttpStatus.BAD_REQUEST);
+		}
+		
+		catch (Exception e) {
+		    e.printStackTrace();
+		    return new ResponseEntity(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+		} catch (Throwable e) {
+		    e.printStackTrace();
+		    return new ResponseEntity(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+		}
     }
 
 //

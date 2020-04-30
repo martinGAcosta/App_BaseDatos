@@ -21,20 +21,18 @@ import com.db.dbapp.model.Cliente;
 import com.db.dbapp.model.Vendedor;
 import com.db.dbapp.model.dtos.ClienteDto;
 import com.db.dbapp.model.dtos.VendedorDto;
-import com.db.dbapp.services.ClienteService;
 import com.db.dbapp.services.VendedorService;
 
 @RestController
 @RequestMapping(path = "administracion")
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class AdminVendedorController {
 
     private VendedorService vendedorService;
-    private ClienteService clienteService;
 
     @Autowired
-    public AdminVendedorController(VendedorService vendedorService, ClienteService clienteService) {
+    public AdminVendedorController(VendedorService vendedorService) {
 	this.vendedorService = vendedorService;
-	this.clienteService = clienteService;
     }
 
     @RequestMapping(path = "/vendedores/crear", method = RequestMethod.POST, produces = "application/json")
@@ -100,30 +98,19 @@ public class AdminVendedorController {
 
     }
 
-    	
-
     @RequestMapping(path = "/vendedores/transferir/{idDesde}/{idHasta}", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<VendedorDto> transferirCliente(@PathVariable(name = "idDesde", required = true) Long idDesde,
 	    @PathVariable(name = "idHasta", required = true) Long idHasta) {
 
 	try {
-	    Vendedor desde = vendedorService.obtenerPorId(idDesde);
-	    Vendedor hasta = vendedorService.obtenerPorId(idHasta);
-	    Set<Cliente> clientes = new HashSet<>(desde.getClientes());
-	    if (clientes.isEmpty()) {
-	    	return new ResponseEntity(
-	    		    "No existen clientes para transferir", HttpStatus.OK);} else {
-	    clientes.stream().forEach(cliente -> {
-		desde.removeCliente(cliente);
-		hasta.addCliente(cliente);
-		cliente.setVendedor(hasta);
-	    });
-	    vendedorService.actualizar(desde);
-	    vendedorService.actualizar(hasta);
+	    vendedorService.transferirClientes(idDesde, idHasta);
 	    return new ResponseEntity(
 		    "Los clientes fueron transferidos del vendedor " + idDesde + " al vendedor " + idHasta,
-		    HttpStatus.OK);}
+		    HttpStatus.OK);
 
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    return new ResponseEntity(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
 	} catch (Throwable e) {
 	    e.printStackTrace();
 	    return new ResponseEntity(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);

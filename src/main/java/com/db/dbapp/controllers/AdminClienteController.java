@@ -39,13 +39,8 @@ public class AdminClienteController {
     public ResponseEntity<ClienteDto> crearCliente(@PathVariable(name = "idVendedor", required = true) Long idVendedor,
 	    @RequestBody ClienteDto clienteDto) {
 	try {
-	    Vendedor vendedor = vendedorService.obtenerPorId(idVendedor);
-	    Cliente cliente = ClienteMapper.toCliente(new Cliente(), new HashSet<Carro>(), clienteDto);
-	    cliente.setVendedor(vendedor);
-	    cliente = clienteService.crear(cliente);
-	    vendedor.addCliente(cliente);
-	    vendedorService.actualizar(vendedor);
-	    clienteDto = ClienteMapper.toClienteDto(clienteDto, cliente, null);
+		clienteDto = clienteService.crearCliente(idVendedor, clienteDto);
+	    
 	    return new ResponseEntity<ClienteDto>(clienteDto, HttpStatus.CREATED);
 	} catch (Throwable e) {
 	    e.printStackTrace();
@@ -72,20 +67,9 @@ public class AdminClienteController {
     @RequestMapping(path = "/clientes/borrar/{id}", method = RequestMethod.DELETE, produces = "Application/json")
     public ResponseEntity borrarCliente(@PathVariable(name = "id", required = true) Long id) {
 	try {
-		Cliente cliente = clienteService.obtenerPorId(id);
-		if (cliente.getCompras() != null) {
-		    return new ResponseEntity("El Cliente " + id + " no puede ser eliminado por tener compras creadas", HttpStatus.OK);
-		}
-		else
-			{
-			if (cliente.getVendedor() != null) {
-				Vendedor vendedor = vendedorService.obtenerPorId(cliente.getVendedor().getId());
-				vendedor.removeCliente(cliente);
-				vendedorService.actualizar(vendedor);}
-				clienteService.eliminar(id);
-			    return new ResponseEntity("Cliente " + id + " eliminado", HttpStatus.OK);
-			}
-		} catch (Throwable e) {
+	    clienteService.eliminar(id);
+	    return new ResponseEntity(HttpStatus.OK);
+	} catch (Throwable e) {
 	    e.printStackTrace();
 	    return new ResponseEntity(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
 	}
@@ -105,17 +89,8 @@ public class AdminClienteController {
 	    @PathVariable(name = "idVendedor", required = true) Long idVendedor) {
 
 	try {
-	    Cliente cliente = clienteService.obtenerPorId(idCliente);
-	    Vendedor vendedor = vendedorService.obtenerPorId(idVendedor);
-	    if (cliente.getVendedor() != null) {
-		cliente.getVendedor().removeCliente(cliente);
-	    }
-	    cliente.setVendedor(vendedor);
-	    vendedor.addCliente(cliente);
-	    clienteService.actualizar(cliente);
-	    vendedorService.actualizar(vendedor);
-
-	    ClienteDto clienteDto = ClienteMapper.toClienteDto(new ClienteDto(), cliente, null);
+		ClienteDto clienteDto = clienteService.reasignarVendedor(idCliente, idVendedor);
+	    
 	    return new ResponseEntity(clienteDto, HttpStatus.OK);
 	} catch (Throwable e) {
 	    e.printStackTrace();

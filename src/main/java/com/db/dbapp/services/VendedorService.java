@@ -1,10 +1,13 @@
 package com.db.dbapp.services;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.db.dbapp.model.Cliente;
 import com.db.dbapp.model.Vendedor;
 import com.db.dbapp.repositories.VendedorRepository;
 
@@ -56,5 +59,21 @@ public class VendedorService extends PersonaService<Vendedor, Long> {
     @Override
     public List<Vendedor> listar() {
 	return (List<Vendedor>) vendedorRepository.findAll();
+    }
+
+    public void transferirClientes(Long idDesde, Long idHasta) throws Throwable {
+	Vendedor desde = this.obtenerPorId(idDesde);
+	Vendedor hasta = this.obtenerPorId(idHasta);
+	Set<Cliente> clientes = new HashSet<>(desde.getClientes());
+	if (clientes.isEmpty())
+	    throw new RuntimeException("No existen clientes para transferir");
+	clientes.stream().forEach(cliente -> {
+	    desde.removeCliente(cliente);
+	    hasta.addCliente(cliente);
+	    cliente.setVendedor(hasta);
+	});
+	actualizar(desde);
+	actualizar(hasta);
+
     }
 }
